@@ -1,0 +1,10 @@
+{
+  "column_name": "email",
+  "mapping": {
+    "s:eliteeric0468@gmail.com": [
+      1
+    ]
+  },
+  "name": "idx_users_email",
+  "table_name": "users"
+}

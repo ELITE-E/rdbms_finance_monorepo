@@ -1,0 +1,10 @@
+{
+  "column_name": "ym",
+  "mapping": {
+    "s:2026-01": [
+      1
+    ]
+  },
+  "name": "idx_tx_ym",
+  "table_name": "transactions"
+}

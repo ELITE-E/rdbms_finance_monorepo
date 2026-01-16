@@ -1,0 +1,233 @@
+{
+  "indexes": {
+    "idx_categories_user": {
+      "column_name": "user_id",
+      "table_name": "categories"
+    },
+    "idx_tx_category": {
+      "column_name": "category_id",
+      "table_name": "transactions"
+    },
+    "idx_tx_user": {
+      "column_name": "user_id",
+      "table_name": "transactions"
+    },
+    "idx_tx_ym": {
+      "column_name": "ym",
+      "table_name": "transactions"
+    },
+    "idx_users_email": {
+      "column_name": "email",
+      "table_name": "users"
+    },
+    "idx_users_username": {
+      "column_name": "username",
+      "table_name": "users"
+    }
+  },
+  "tables": {
+    "categories": {
+      "columns": [
+        {
+          "name": "id",
+          "not_null": false,
+          "primary_key": true,
+          "typ": {
+            "name": "INTEGER",
+            "params": []
+          },
+          "unique": false
+        },
+        {
+          "name": "user_id",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "INTEGER",
+            "params": []
+          },
+          "unique": false
+        },
+        {
+          "name": "name",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "VARCHAR",
+            "params": [
+              50
+            ]
+          },
+          "unique": false
+        }
+      ],
+      "indexes": {
+        "idx_categories_user": {
+          "column_name": "user_id",
+          "table_name": "categories"
+        }
+      }
+    },
+    "transactions": {
+      "columns": [
+        {
+          "name": "id",
+          "not_null": false,
+          "primary_key": true,
+          "typ": {
+            "name": "INTEGER",
+            "params": []
+          },
+          "unique": false
+        },
+        {
+          "name": "user_id",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "INTEGER",
+            "params": []
+          },
+          "unique": false
+        },
+        {
+          "name": "category_id",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "INTEGER",
+            "params": []
+          },
+          "unique": false
+        },
+        {
+          "name": "amount_cents",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "INTEGER",
+            "params": []
+          },
+          "unique": false
+        },
+        {
+          "name": "type",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "VARCHAR",
+            "params": [
+              7
+            ]
+          },
+          "unique": false
+        },
+        {
+          "name": "description",
+          "not_null": false,
+          "primary_key": false,
+          "typ": {
+            "name": "TEXT",
+            "params": []
+          },
+          "unique": false
+        },
+        {
+          "name": "date",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "DATE",
+            "params": []
+          },
+          "unique": false
+        },
+        {
+          "name": "ym",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "VARCHAR",
+            "params": [
+              7
+            ]
+          },
+          "unique": false
+        }
+      ],
+      "indexes": {
+        "idx_tx_category": {
+          "column_name": "category_id",
+          "table_name": "transactions"
+        },
+        "idx_tx_user": {
+          "column_name": "user_id",
+          "table_name": "transactions"
+        },
+        "idx_tx_ym": {
+          "column_name": "ym",
+          "table_name": "transactions"
+        }
+      }
+    },
+    "users": {
+      "columns": [
+        {
+          "name": "id",
+          "not_null": false,
+          "primary_key": true,
+          "typ": {
+            "name": "INTEGER",
+            "params": []
+          },
+          "unique": false
+        },
+        {
+          "name": "username",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "VARCHAR",
+            "params": [
+              32
+            ]
+          },
+          "unique": true
+        },
+        {
+          "name": "email",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "VARCHAR",
+            "params": [
+              255
+            ]
+          },
+          "unique": true
+        },
+        {
+          "name": "password_hash",
+          "not_null": true,
+          "primary_key": false,
+          "typ": {
+            "name": "TEXT",
+            "params": []
+          },
+          "unique": false
+        }
+      ],
+      "indexes": {
+        "idx_users_email": {
+          "column_name": "email",
+          "table_name": "users"
+        },
+        "idx_users_username": {
+          "column_name": "username",
+          "table_name": "users"
+        }
+      }
+    }
+  },
+  "version": 1
+}

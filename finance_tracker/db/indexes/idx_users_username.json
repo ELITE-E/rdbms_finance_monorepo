@@ -1,0 +1,10 @@
+{
+  "column_name": "username",
+  "mapping": {
+    "s:elite": [
+      1
+    ]
+  },
+  "name": "idx_users_username",
+  "table_name": "users"
+}

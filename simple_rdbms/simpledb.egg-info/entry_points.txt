@@ -1,0 +1,2 @@
+[console_scripts]
+simpledb = simpledb.__main__:main

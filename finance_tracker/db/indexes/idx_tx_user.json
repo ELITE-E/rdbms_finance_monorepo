@@ -1,0 +1,10 @@
+{
+  "column_name": "user_id",
+  "mapping": {
+    "i:1": [
+      1
+    ]
+  },
+  "name": "idx_tx_user",
+  "table_name": "transactions"
+}

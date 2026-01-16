@@ -1,0 +1,74 @@
+<!--
+templates/transaction_new.html
+
+Step 5:
+- Transaction creation form.
+- On submit POST /transactions/new.
+-->
+{% extends "base.html" %}
+{% block content %}
+  <h1 class="text-2xl font-semibold mb-4">New Transaction</h1>
+
+  {% if error %}
+    <div class="mb-4 p-3 rounded bg-red-100 text-red-800">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="/transactions/new" class="bg-white border rounded p-6 space-y-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">Type</label>
+      <select name="tx_type" class="w-full border rounded px-3 py-2">
+        <option value="expense">Expense</option>
+        <option value="income">Income</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Amount</label>
+      <input
+        name="amount"
+        placeholder="e.g., 12.34"
+        class="w-full border rounded px-3 py-2"
+        required
+      />
+      <p class="text-xs text-slate-500 mt-1">We store amounts as cents internally.</p>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Date</label>
+      <input
+        name="date"
+        placeholder="YYYY-MM-DD"
+        class="w-full border rounded px-3 py-2"
+        required
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Category</label>
+      <select name="category_id" class="w-full border rounded px-3 py-2">
+        {% for c in categories %}
+          <option value="{{ c.id }}">{{ c.name }}</option>
+        {% endfor %}
+      </select>
+      {% if categories|length == 0 %}
+        <p class="text-sm text-red-700 mt-2">
+          You have no categories. Create one first in <a class="underline" href="/categories">Categories</a>.
+        </p>
+      {% endif %}
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Description (optional)</label>
+      <input name="description" class="w-full border rounded px-3 py-2" />
+    </div>
+
+    <button class="px-4 py-2 rounded bg-slate-900 text-white hover:bg-slate-800"
+            {% if categories|length == 0 %}disabled class="opacity-50"{% endif %}>
+      Save Transaction
+    </button>
+
+    <p class="text-sm text-slate-600">
+      Next (Step 6): list transactions (with JOIN to show category name).
+    </p>
+  </form>
+{% endblock %}

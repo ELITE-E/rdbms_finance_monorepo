@@ -1,0 +1,147 @@
+<!--
+templates/dashboard.html
+
+Step 9:
+- Adds Chart.js pie chart for spending by category.
+- Keeps the existing table as a readable fallback.
+-->
+{% extends "base.html" %}
+{% block content %}
+  <h1 class="text-2xl font-semibold mb-2">Dashboard</h1>
+  <p class="text-slate-600 mb-6">Welcome, {{ user.username }}.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white border rounded p-5">
+      <div class="text-sm text-slate-600">Current Balance</div>
+      <div class="text-2xl font-mono mt-1">{{ balance }}</div>
+    </div>
+
+    <div class="bg-white border rounded p-5">
+      <div class="text-sm text-slate-600">Income ({{ ym }})</div>
+      <div class="text-2xl font-mono mt-1 text-green-700">{{ month_income }}</div>
+    </div>
+
+    <div class="bg-white border rounded p-5">
+      <div class="text-sm text-slate-600">Expenses ({{ ym }})</div>
+      <div class="text-2xl font-mono mt-1 text-red-700">{{ month_expense }}</div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-white border rounded p-6">
+      <h2 class="font-semibold mb-3">Spending by Category ({{ ym }})</h2>
+
+      {% if spending_by_category|length == 0 %}
+        <p class="text-slate-600">No expenses this month.</p>
+      {% else %}
+        <!-- Chart container -->
+        <div class="mb-6">
+          <canvas id="spendingChart" height="180"></canvas>
+          <p class="text-xs text-slate-500 mt-2">
+            Chart values are in dollars (derived from integer cents).
+          </p>
+        </div>
+
+        <!-- Fallback table (also useful alongside the chart) -->
+        <table class="w-full text-sm">
+          <thead class="text-left text-slate-600">
+            <tr>
+              <th class="py-2">Category</th>
+              <th class="py-2 text-right">Spent</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y">
+            {% for row in spending_by_category %}
+              <tr>
+                <td class="py-2">{{ row.category_name }}</td>
+                <td class="py-2 text-right font-mono">{{ row.expense }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </div>
+
+    <div class="bg-white border rounded p-6">
+      <h2 class="font-semibold mb-3">Recent Transactions</h2>
+
+      {% if recent_transactions|length == 0 %}
+        <p class="text-slate-600">No transactions yet.</p>
+        <a href="/transactions/new" class="underline">Add your first transaction</a>
+      {% else %}
+        <div class="divide-y">
+          {% for t in recent_transactions %}
+            <div class="py-2 flex items-center justify-between">
+              <div>
+                <div class="text-sm">
+                  <span class="font-medium">{{ t.category_name }}</span>
+                  <span class="text-slate-500">({{ t.date }})</span>
+                </div>
+                <div class="text-xs text-slate-600">
+                  {{ t.description or "" }}
+                </div>
+              </div>
+
+              <div class="font-mono text-sm {% if t.type == 'expense' %}text-red-700{% else %}text-green-700{% endif %}">
+                {{ t.amount_display }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="mt-4">
+          <a href="/transactions" class="underline">View all transactions</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Chart.js (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // Step 9:
+    // Labels/values are passed from the backend as JSON strings.
+    const labels = {{ chart_labels_json | safe }};
+    const values = {{ chart_values_json | safe }};
+
+    // If there is no chart canvas (e.g., no data), do nothing.
+    const canvas = document.getElementById("spendingChart");
+    if (canvas && labels.length > 0) {
+      // Basic color palette. If categories exceed palette length, we cycle.
+      const palette = [
+        "#ef4444", "#f97316", "#eab308", "#22c55e", "#06b6d4",
+        "#3b82f6", "#8b5cf6", "#ec4899", "#64748b"
+      ];
+      const bgColors = labels.map((_, i) => palette[i % palette.length]);
+
+      new Chart(canvas, {
+        type: "pie",
+        data: {
+          labels: labels,
+          datasets: [{
+            data: values,
+            backgroundColor: bgColors
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "bottom"
+            },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  const label = ctx.label || "";
+                  const val = ctx.parsed;
+                  return `${label}: $${val.toFixed(2)}`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+  </script>
+{% endblock %}

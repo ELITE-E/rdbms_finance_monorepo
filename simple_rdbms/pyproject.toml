@@ -1,0 +1,22 @@
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simpledb"
+version = "0.1.0"
+description = "Educational mini-RDBMS with SQL-like interface and REPL"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+simpledb = "simpledb.__main__:main"
+
+[tool.setuptools]
+packages = ["simpledb"]
+py-modules = ["repl"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

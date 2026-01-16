@@ -1,0 +1,78 @@
+<!--
+templates/categories.html
+
+Step 4:
+- List categories
+- Add category
+- Rename category (inline form)
+- Delete category (inline form)
+
+Delete is blocked by backend if transactions reference the category.
+-->
+{% extends "base.html" %}
+{% block content %}
+  <h1 class="text-2xl font-semibold mb-4">Categories</h1>
+
+  {% if error %}
+    <div class="mb-4 p-3 rounded bg-red-100 text-red-800">{{ error }}</div>
+  {% endif %}
+
+  <div class="bg-white border rounded p-6 mb-6">
+    <h2 class="font-semibold mb-2">Add Category</h2>
+    <form method="post" action="/categories" class="flex gap-2">
+      <input
+        name="name"
+        placeholder="e.g., Groceries"
+        class="flex-1 border rounded px-3 py-2"
+        required
+      />
+      <button class="px-4 py-2 rounded bg-slate-900 text-white hover:bg-slate-800">
+        Add
+      </button>
+    </form>
+  </div>
+
+  <div class="bg-white border rounded p-6">
+    <h2 class="font-semibold mb-2">Your Categories</h2>
+
+    {% if categories|length == 0 %}
+      <p class="text-slate-600">No categories yet. Add one above.</p>
+    {% else %}
+      <ul class="divide-y">
+        {% for c in categories %}
+          <li class="py-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="font-medium">{{ c.name }}</div>
+                <div class="text-xs text-slate-500">id={{ c.id }}</div>
+              </div>
+
+              <form method="post" action="/categories/{{ c.id }}/delete"
+                    onsubmit="return confirm('Delete category {{ c.name }}?');">
+                <button class="text-sm px-3 py-2 rounded bg-red-600 text-white hover:bg-red-500">
+                  Delete
+                </button>
+              </form>
+            </div>
+
+            <form method="post" action="/categories/{{ c.id }}/rename" class="flex gap-2">
+              <input
+                name="new_name"
+                value="{{ c.name }}"
+                class="flex-1 border rounded px-3 py-2"
+                required
+              />
+              <button class="text-sm px-3 py-2 rounded bg-slate-900 text-white hover:bg-slate-800">
+                Rename
+              </button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <p class="text-sm text-slate-600 mt-4">
+      Next (Step 5): add Transactions (Create).
+    </p>
+  </div>
+{% endblock %}
