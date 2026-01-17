@@ -13,8 +13,9 @@ dependencies = []
 [project.scripts]
 simpledb = "simpledb.__main__:main"
 
-[tool.setuptools]
-packages = ["simpledb"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["simpledb*"]
 py-modules = ["repl"]
 
 [tool.pytest.ini_options]
