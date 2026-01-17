@@ -139,4 +139,4 @@ pyjwt
 
 ## ⚠️ Important Note
 
-This project was built for educational purposes to demonstrate RDBMS implementation concepts. It is primarily intended for academic evaluation and may have limitations in production environments. If you encounter any issues during setup, please refer to the installation instructions above or open an issue in the repository.
+This project was built for educational/proffesional purposes to demonstrate RDBMS implementation concepts. It is primarily intended for  evaluation and may have limitations in production environments. If you encounter any issues during setup, please refer to the installation instructions above or open an issue in the repository.
