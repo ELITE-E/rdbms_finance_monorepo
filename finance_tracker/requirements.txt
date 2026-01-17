@@ -3,4 +3,4 @@ uvicorn
 jinja2
 pyjwt
 passlib[bcrypt]
-python-multipart
+python-multipart==0.0.21
