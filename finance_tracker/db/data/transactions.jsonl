@@ -1,1 +1,2 @@
 {"_rid":1,"id":1,"user_id":1,"category_id":1,"amount_cents":1254,"type":"expense","description":"Wow ,this is wonderfull.","date":"2026-01-12","ym":"2026-01"}
+{"_rid":2,"id":2,"user_id":1,"category_id":1,"amount_cents":9800,"type":"income","description":"Food manze","date":"2026-01-17","ym":"2026-01"}
