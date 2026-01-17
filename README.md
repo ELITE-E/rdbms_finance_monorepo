@@ -135,4 +135,8 @@ python-multipart
 passlib[bcrypt]
 pyjwt
 ```
--**NB:This is a project built to demonstrate RDBMS for assignment/challenge purposes only** thus may not work correctly but It works on my machine ,IDK about yours.***hehehe!***
+---
+
+## ⚠️ Important Note
+
+This project was built for educational purposes to demonstrate RDBMS implementation concepts. It is primarily intended for academic evaluation and may have limitations in production environments. If you encounter any issues during setup, please refer to the installation instructions above or open an issue in the repository.
